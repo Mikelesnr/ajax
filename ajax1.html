@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 1 - Text File</title>
+</head>
+<body>
+    <h1>
+        Fetch text file
+    </h1>
+    <br>
+    <button id="button">Get text File</button>
+    <br><br>
+    <div>
+        <p id="text">
+            
+        </p>
+    </div>
+
+    <script>
+        //script tag
+        document.getElementById('button').addEventListener("click",loadText);
+
+        function loadText() {
+            //create XHr
+            var xhr = new XMLHttpRequest();
+            // open type url/file async:true of false
+            xhr.open('GET','sample.txt',true)
+
+            xhr.onload = function () {
+                if(this.status === 200){
+                    // console.log(this.responseText)
+                    document.getElementById('text').innerHTML = this.responseText;
+                }else if(this.status === 404){
+                    document.getElementById('text').innerHTML = "<h1>page not found<h1>";
+                }
+            }
+
+            xhr.onerror = function(){
+                console.log("request Error")
+            }
+
+            // xhr.onreadystatechange = function(){
+            //     if(this.readyState === 4 && this.status === 200){
+            //         console.log(this.responseText)
+            //     }
+            // }
+
+            //send request
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
