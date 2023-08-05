@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Ajax and Php forms</title>
+</head>
+<body>
+    <hr>
+    <br>
+    <!-- normal get form refreshes page -->
+    <h1>php Get form</h1>
+    <br>
+    <form action="http://localhost:3000/process.php" class="align-items-center" method="get">
+        <input type="text" class="form-control" name="name" id="" placeholder="Enter name">
+        <br>
+        <input type="submit" style="width:100px" class="align-self-center form-control btn btn-primary" value="submit">
+    </form>
+
+     <br>
+    <!-- normal post form refreshes page -->
+    <h1>php post form</h1>
+    <br>
+    <form action="http://localhost:3000/process.php" class="align-items-center" method="post">
+        <input type="text" class="form-control" name="name" id="" placeholder="Enter name">
+        <br>
+        <input type="submit" style="width:100px" class="align-self-center form-control btn btn-primary" value="submit">
+    </form>
+
+    <br>
+    <!-- ajax form does not refresh page using e.preventDefault() -->
+    <h1>ajax Get form</h1>
+    <br>
+    <form id="get-form">
+        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name">
+        <br>
+        <input type="submit" id="" style="width:100px" class="align-self-center form-control btn btn-primary" value="submit">
+    </form>
+
+    <br>
+    <!-- ajax get form does not refresh page using e.preventDefault() -->
+    <h1>ajax Get form</h1>
+    <br>
+    <form id="get-form">
+        <input type="text" class="form-control" name="name" id="name1" placeholder="Enter name">
+        <br>
+        <input type="submit" id="btn2" style="width:100px" class="align-self-center form-control btn btn-primary" value="submit">
+    </form>
+
+     <br>
+    <!-- ajax get form does not refresh page using e.preventDefault() -->
+    <h1>ajax post form</h1>
+    <br>
+    <form id="post-form">
+        <input type="text" class="form-control" name="name" id="name2" placeholder="Enter name">
+        <br>
+        <input type="submit" id="btn2" style="width:100px" class="align-self-center form-control btn btn-primary" value="submit">
+    </form>
+
+
+    <script>
+        document.getElementById('get-form').addEventListener('submit',getName);
+        document.getElementById('post-form').addEventListener('submit',postName);
+
+
+        function getName(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('name1').value !== ""?document.getElementById('name1').value:"Brad";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','http://localhost:3000/process.php?name='+name,true)
+
+            xhr.onload = function () {
+                console.log(this.responseText);
+            }
+
+            xhr.send()
+        }
+
+        function postName(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('name2').value !== ""?document.getElementById('name2').value:"Brad";
+            var params = `name=${name}`;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','http://localhost:3000/process.php',true);
+            xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+
+
+            xhr.onload = function () {
+                console.log(this.responseText);
+            }
+
+            xhr.send(params)
+        }
+    </script>
+</body>
+</html>
